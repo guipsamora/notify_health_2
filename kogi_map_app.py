@@ -7,10 +7,39 @@ import json
 # Title for the app
 st.title("Connectivity in Benue and Taraba States")
 
-st.logo('https://static.wixstatic.com/media/8f90d6_882dbd58c7884c1ea5ad885d809f03ac~mv2.png/v1/fill/w_479,h_182,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Notify%20Health%20Logo%20Blue.png',link="https://www.notifyhealth.org/",icon_image='https://static.wixstatic.com/media/8f90d6_882dbd58c7884c1ea5ad885d809f03ac~mv2.png/v1/fill/w_479,h_182,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Notify%20Health%20Logo%20Blue.png')
+# Includes logo of Notify Health
+st.logo('https://static.wixstatic.com/media/8f90d6_882dbd58c7884c1ea5ad885d809f03ac~mv2.png/v1/fill/w_479,h_182,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Notify%20Health%20Logo%20Blue.png',
+        link="https://www.notifyhealth.org/",
+        icon_image='https://static.wixstatic.com/media/8f90d6_882dbd58c7884c1ea5ad885d809f03ac~mv2.png/v1/fill/w_479,h_182,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Notify%20Health%20Logo%20Blue.png'
+        )
 
 
 ###### LOAD DATA ######
+
+# Cities data with two dots per city
+cities_data = [
+    # Base black dots
+    {"state": "Benue","city": "Makurdi", "lat": 7.7306, "lon": 8.5300, "color": [0, 0, 0], "radius": 3000, "elevation": 0},
+    {"state": "Benue","city": "Gboko", "lat": 7.3167, "lon": 9.0000, "color": [0, 0, 0], "radius": 3000, "elevation": 0},
+    {"state": "Taraba","city": "Wukari", "lat": 7.8500, "lon": 9.7833, "color": [0, 0, 0], "radius": 3000, "elevation": 0},
+    {"state": "Taraba","city": "Jalingo", "lat": 8.9000, "lon": 11.3667, "color": [0, 0, 0], "radius": 3000, "elevation": 0},
+    {"state": "Taraba","city": "Gembu", "lat": 6.7000, "lon": 11.2667, "color": [0, 0, 0], "radius": 3000, "elevation": 0},
+    {"state": "Kogi","city": "Anyigba", "lat": 7.4958, "lon": 7.1889, "color": [0, 0, 0], "radius": 3000, "elevation": 0},
+    {"state": "Kogi","city": "Lokoja", "lat": 7.8000, "lon": 6.7333, "color": [0, 0, 0], "radius": 3000, "elevation": 0},
+
+
+    # Top red dots
+    {"state": "Benue","city": "Makurdi", "lat": 7.7306, "lon": 8.5300, "color": [255, 0, 0], "radius": 1500, "elevation": 1},
+    {"state": "Benue","city": "Gboko", "lat": 7.3167, "lon": 9.0000, "color": [255, 0, 0], "radius": 1500, "elevation": 1},
+    {"state": "Taraba","city": "Wukari", "lat": 7.8500, "lon": 9.7833, "color": [255, 0, 0], "radius": 1500, "elevation": 1},
+    {"state": "Taraba","city": "Gembu", "lat": 6.7000, "lon": 11.2667, "color": [255, 0, 0], "radius": 1500, "elevation": 1},
+    {"state": "Taraba","city": "Jalingo", "lat": 8.9000, "lon": 11.3667, "color": [255, 0, 0], "radius": 1500, "elevation": 1},
+    {"state": "Kogi","city": "Anyigba", "lat": 7.4958, "lon": 7.1889, "color": [255, 0, 0], "radius": 1500, "elevation": 1},
+    {"state": "Kogi","city": "Lokoja", "lat": 7.8000, "lon": 6.7333, "color": [255, 0, 0], "radius": 1500, "elevation": 1},
+]
+
+# Create DataFrame
+cities_df = pd.DataFrame(cities_data)
 
 # Load data for benue health centers
 csv_benue = "BENUE-PRIMARY HEALTH CENTERS-data - BENUE-PRIMARY HEALTH CENTERS-data.csv"
@@ -96,7 +125,14 @@ max_population = max(
     df_population_taraba["Total Population"].max()
 )
 
-# Load your GeoJSON
+
+
+
+# Load GeoJSON with Nigeria's States
+with open("nigeria-states.geojson") as f:
+    states_geojson_data = json.load(f)
+
+# Load GeoJSON with Nigeria's Local Government Areas (LGAs)
 with open("nigeria_lga.geojson") as f:
     geojson_data = json.load(f)
 
@@ -136,26 +172,7 @@ for feature in geojson_data["features"]:
         feature["properties"]["age_0_14"] = 0
         feature["properties"]["color"] = [200, 200, 200, 50]
 
-
-# Load states GeoJSON
-with open("nigeria-states.geojson") as f:
-    states_geojson_data = json.load(f)
-
-
 ###### MAP ######
-
-# Create GeoJsonLayer for the choropleth
-# geojson_layer = pdk.Layer(
-#     "GeoJsonLayer",
-#     data=geojson_data,  # <- This should be a Python dict or a URL string
-#     stroked=True,
-#     filled=False,
-#     # get_fill_color="properties.color",
-#     get_line_color=[80, 80, 80],
-#     lineWidthMinPixels=1.5,   # Add this line
-#     pickable=True,
-#     auto_highlight=True
-# )
 
 geojson_layer = pdk.Layer(
     "GeoJsonLayer",
@@ -176,6 +193,31 @@ states_layer = pdk.Layer(
     filled=False,  # transparent fill
     get_line_color=[0, 0, 0, 200],  # black border
     lineWidthMinPixels=2
+)
+
+# Create scatterplot layer for Cities
+cities_layer = pdk.Layer(
+    "ScatterplotLayer",
+    data=cities_df,
+    get_position='[lon, lat]',
+    get_color='color',
+    get_radius='radius',
+    get_elevation='elevation',
+    pickable=True,
+    auto_highlight=True
+)
+
+# Create text labels for cities
+labels_layer = pdk.Layer(
+    "TextLayer",
+    data=cities_df,
+    get_position='[lon, lat]',
+    get_text='city',
+    get_size=17,
+    get_color=[0, 0, 0],
+    get_angle=0,
+    get_alignment_baseline="'bottom'",
+    pickable=False,
 )
 
 # Create ScatterplotLayer for the Operational Health Centers in Benue
@@ -216,7 +258,7 @@ initial_view_state = pdk.ViewState(
 st.pydeck_chart(pdk.Deck(
     map_style='mapbox://styles/mapbox/light-v9',
     initial_view_state=initial_view_state,
-    layers=[geojson_layer, benue_health_centers_layer, taraba_health_centers_layer, states_layer],
+    layers=[geojson_layer, benue_health_centers_layer, taraba_health_centers_layer, states_layer, cities_layer, labels_layer],
     # use_container_width=True,
     tooltip = {
     "html": """
@@ -238,7 +280,56 @@ st.pydeck_chart(pdk.Deck(
 #     st.write(operational_health_centers.head())
 
 if st.checkbox("Show sample Operational Health Centers data"):
-    st.subheader("Benue State")
+    st.subheader("📍Benue State")
     st.dataframe(df_benue_health_centers.head(5))  # 
-    st.subheader("Taraba State")
+    st.subheader("📍Taraba State")
     st.dataframe(df_taraba_health_centers.head(5))  # 
+
+# Horizontal rule / divider
+st.markdown("---")
+
+###### SHOW IMAGES OF NETWORK COVERAGE ######
+
+st.subheader("🗺️ Mobile Network Coverage")
+
+# Image paths or URLs
+big_image = "images/airtel.png"
+image_2 = "images/glo.png"
+image_3 = "images/mtn.png"
+
+# Display the big image full width
+st.image(big_image, caption="Airtel", use_column_width=True)
+
+# Create two columns for the side-by-side images
+col1, col2 = st.columns(2)
+
+with col1:
+    st.image(image_2, caption="Glo", use_column_width=True)
+
+with col2:
+    st.image(image_3, caption="MTN", use_column_width=True)
+
+
+
+# Add a horizontal divider
+st.markdown("---")
+
+# # Data Sources section
+# st.markdown("### Data Sources")
+# st.markdown("""
+# - **City Coordinates:** [GeoNames.org](http://www.geonames.org/)
+# - **Map Data:** [OpenStreetMap](https://www.openstreetmap.org/)
+# - **Population Density Data:** [WorldPop Project](https://www.worldpop.org/)
+# - **Imagery:** Custom images from local directory
+# """)
+
+
+
+# Add content to the sidebar
+st.sidebar.markdown("### 📖 Data Sources")
+st.sidebar.markdown("""
+- **City Coordinates:** [GeoNames.org](http://www.geonames.org/)
+- **Map Data:** [OpenStreetMap](https://www.openstreetmap.org/)
+- **Population Density Data:** [WorldPop Project](https://www.worldpop.org/)
+- **Imagery:** Local image directory
+""")
