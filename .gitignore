@@ -2,3 +2,8 @@
 NGA_population_v2_1_agesex_under1.tif
 ./nigeria_Local_Government_Area_level_2 (1)
 *.tif
+
+nga_pd_2020_1km_UNadj_ASCII_XYZ.csv
+NGA_population_v2_1_agesex/NGA_population_v2_1_agesex_under15.tif
+NGA_population_v2_1_agesex/NGA_population_v2_1_agesex_under5.tif
+NGA_population_v2_1_agesex/*.tif
