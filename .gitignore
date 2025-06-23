@@ -1,5 +1,6 @@
-# Ignore all .tif files
+# Ignore all .tif and .csv files
 *.tif
+*.csv
 
 # Ignore specific CSV file
 nga_pd_2020_1km_UNadj_ASCII_XYZ.csv
