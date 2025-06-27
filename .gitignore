@@ -10,3 +10,10 @@ NGA_population_v2_1_agesex/
 
 # Ignore other specific folders
 nigeria_Local_Government_Area_level_2 (1)/
+
+# files > 200 MB
+NGA_population_v2_1_agesex/NGA_population_v2_1_agesex_under15.tif
+NGA_population_v2_1_agesex/NGA_population_v2_1_agesex_under5.tif
+NGA_population_v2_1_agesex/NGA_population_v2_1_agesex_under1.tif
+nga_children_under_five_2020.csv
+NGA_population_v2_1_agesex_under1.tif
