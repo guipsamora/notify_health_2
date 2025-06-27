@@ -362,8 +362,8 @@ grid_population = "images/grid_population_density.png"
 kontur_population = "images/kontur_population_density.png"
 
 # # Display the big image full width
-st.image(grid_population, caption="GRID Population Density", use_column_width=True)
-st.image(kontur_population, caption="Kontur Population Density", use_column_width=True)
+st.image(grid_population, caption="GRID Population Density", use_container_width=True)
+st.image(kontur_population, caption="Kontur Population Density", use_container_width=True)
 
 # Horizontal rule / divider
 st.markdown("---")
@@ -379,25 +379,25 @@ mtn_coverage = "images/mtn.png"
 mtn2_coverage = "images/MTN-Coverage.png"
 
 # # Display the big image full width
-# st.image(big_image, caption="Airtel", use_column_width=True)
+# st.image(big_image, caption="Airtel", use_container_width=True)
 
 # Create two columns for the side-by-side images
 col1, col2 = st.columns(2)
 
 with col1:
-    st.image(airtel_coverage, caption="Airtel", use_column_width=True)
+    st.image(airtel_coverage, caption="Airtel", use_container_width=True)
 
 with col2:
-    st.image(glo_coverage, caption="Glo", use_column_width=True)
+    st.image(glo_coverage, caption="Glo", use_container_width=True)
 
 # Create two columns for the side-by-side images
 col3, col4 = st.columns(2)
 
 with col3:
-    st.image(mtn_coverage, caption="MTN", use_column_width=True)
+    st.image(mtn_coverage, caption="MTN", use_container_width=True)
 
 with col4:
-    st.image(mtn2_coverage, caption="MTN Own Website", use_column_width=True)
+    st.image(mtn2_coverage, caption="MTN Own Website", use_container_width=True)
 
 st.markdown("---")
 
