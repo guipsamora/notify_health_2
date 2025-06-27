@@ -4,7 +4,7 @@ import pandas as pd
 import json
 
 # Title for the app
-st.title("State Expansion Analysis")
+st.title("Notify Health - State Expansion Analysis")
 
 # Includes logo of Notify Health
 st.logo('https://static.wixstatic.com/media/8f90d6_882dbd58c7884c1ea5ad885d809f03ac~mv2.png/v1/fill/w_479,h_182,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Notify%20Health%20Logo%20Blue.png',
