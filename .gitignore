@@ -1,9 +1,15 @@
 # Ignore all .tif and .csv files
 *.tif
-*.csv
 
 # Ignore specific CSV file
 nga_pd_2020_1km_UNadj_ASCII_XYZ.csv
+nga_children_under_five_2020.csv
+nga_pd_2020_1km_UNadj_ASCII_XYZ.csv
+BENUE-PRIMARY HEALTH CENTERS-data - BENUE-PRIMARY HEALTH CENTERS-data.csv
+TARABA-PRIMARY HEALTH CENTERS-data - TARABA-PRIMARY HEALTH CENTERS-data.csv
+benue_population_under_five.csv
+oper_health_centers_taraba.csv
+
 
 # Ignore entire directory
 NGA_population_v2_1_agesex/
@@ -15,5 +21,4 @@ nigeria_Local_Government_Area_level_2 (1)/
 NGA_population_v2_1_agesex/NGA_population_v2_1_agesex_under15.tif
 NGA_population_v2_1_agesex/NGA_population_v2_1_agesex_under5.tif
 NGA_population_v2_1_agesex/NGA_population_v2_1_agesex_under1.tif
-nga_children_under_five_2020.csv
 NGA_population_v2_1_agesex_under1.tif
