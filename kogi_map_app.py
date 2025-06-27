@@ -4,7 +4,7 @@ import pandas as pd
 import json
 
 # Title for the app
-st.title("Benue and Taraba States")
+st.title("State Expansion Analysis")
 
 # Includes logo of Notify Health
 st.logo('https://static.wixstatic.com/media/8f90d6_882dbd58c7884c1ea5ad885d809f03ac~mv2.png/v1/fill/w_479,h_182,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Notify%20Health%20Logo%20Blue.png',
@@ -23,11 +23,11 @@ st.sidebar.markdown("""
 - [Airtel](https://www.gsma.com/coverage/#681)
 - [Glo Mobile](https://www.gsma.com/coverage/#192)
 - [MTN](https://www.gsma.com/coverage/#320)
+- [MTN - Own Website](https://www.gsma.com/coverage/#320)
                     
 ### 👥 Population
-- [Airtel](https://www.gsma.com/coverage/#681)
-- [Glo Mobile](https://www.gsma.com/coverage/#192)
-- [MTN](https://www.gsma.com/coverage/#320)
+- [GRID3 NGA - Population v2.1](https://data.grid3.org/maps/07fb18a02bef4c98bc4db24a63d671cf/explore?location=7.778158%2C10.102645%2C8.89&path=)
+- [Nigeria population density for 400m H3 hexagons.](https://data.humdata.org/dataset/kontur-population-nigeria)
                     
 """)
 
@@ -219,6 +219,32 @@ for feature in geojson_data["features"]:
         feature["properties"]["facility_count"] = 0
         feature["properties"]["color"] = [200, 200, 200, 50]
 
+###### RECOMMENDATION ######
+
+# Recommendation Table Data
+data = {
+    'State (Region)': ['Benue (East)', 'Taraba (South)', 'Taraba (North)'],
+    'Local Government Areas': [
+        'Ukum, Logo, Buruku, Gboko, Katsina Ala, Ushongo',
+        'Wukari, Donga, Takum',
+        'Jalingo'
+    ],
+    'Why?': [
+        'Reliable network, high population',
+        'Minor MTN coverage issue in Entakum area, Airtel and Glo in good order',
+        'Good coverage, relatively high population'
+    ]
+}
+
+df = pd.DataFrame(data)
+
+# Set index starting from 1
+df.index = df.index + 1
+
+# Display Final Recommendation Table
+st.markdown("##### 📊 Final Connectivity Expansion Recommendations")
+st.table(df)
+
 ###### MAP ######
 
 # Create GeoJson layer for Nigerian States
@@ -327,6 +353,54 @@ st.pydeck_chart(pdk.Deck(
 # Horizontal rule / divider
 st.markdown("---")
 
+###### SHOW IMAGES OF POPULATION DENSITY ######
+
+st.subheader("👥 Population Density")
+
+# Image paths or URLs
+grid_population = "images/grid_population_density.png"
+kontur_population = "images/kontur_population_density.png"
+
+# # Display the big image full width
+st.image(grid_population, caption="GRID Population Density", use_column_width=True)
+st.image(kontur_population, caption="Kontur Population Density", use_column_width=True)
+
+# Horizontal rule / divider
+st.markdown("---")
+
+###### SHOW IMAGES OF NETWORK COVERAGE ######
+
+st.subheader("🗺️ Mobile Network Coverage")
+
+# Image paths or URLs
+airtel_coverage = "images/airtel.png"
+glo_coverage = "images/glo.png"
+mtn_coverage = "images/mtn.png"
+mtn2_coverage = "images/MTN-Coverage.png"
+
+# # Display the big image full width
+# st.image(big_image, caption="Airtel", use_column_width=True)
+
+# Create two columns for the side-by-side images
+col1, col2 = st.columns(2)
+
+with col1:
+    st.image(airtel_coverage, caption="Airtel", use_column_width=True)
+
+with col2:
+    st.image(glo_coverage, caption="Glo", use_column_width=True)
+
+# Create two columns for the side-by-side images
+col3, col4 = st.columns(2)
+
+with col3:
+    st.image(mtn_coverage, caption="MTN", use_column_width=True)
+
+with col4:
+    st.image(mtn2_coverage, caption="MTN Own Website", use_column_width=True)
+
+st.markdown("---")
+
 # Title
 st.subheader("🏥 Number of Health Centers per LGA")
 
@@ -343,25 +417,4 @@ with col2:
     st.dataframe(count_health_centers_per_lga_tar)
 
 # Horizontal rule / divider
-st.markdown("---")
-
-###### SHOW IMAGES OF NETWORK COVERAGE ######
-
-st.subheader("🗺️ Mobile Network Coverage")
-
-# Image paths or URLs
-big_image = "images/airtel.png"
-image_2 = "images/glo.png"
-image_3 = "images/mtn.png"
-
-# Display the big image full width
-st.image(big_image, caption="Airtel", use_column_width=True)
-
-# Create two columns for the side-by-side images
-col1, col2 = st.columns(2)
-
-with col1:
-    st.image(image_2, caption="Glo", use_column_width=True)
-
-with col2:
-    st.image(image_3, caption="MTN", use_column_width=True)
+    
